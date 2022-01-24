@@ -5,30 +5,17 @@
              x:DataType="viewmodels:MainViewModel"
              x:Class="Oma_Projekti_1.Views.MainPage">
     <ContentPage.Content>
-        
-        
         <StackLayout>
-            
-            
             <StackLayout Orientation="Horizontal">
-                
-               
-
+                <Entry Text="{Binding A}" Keyboard="Numeric" HorizontalOptions="FillAndExpand"/>
                 <Picker ItemsSource="{Binding Operations}" SelectedItem="{Binding SelectedOperation,Mode=TwoWay}"/>
-
-
-              
-                
+                <Entry Text="{Binding B}" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
-           
-
+            <Label Text="=" HorizontalOptions="Center"/>
             <Label Text="{Binding Divide}"
-                   
-                VerticalOptions="Center" 
+                   VerticalOptions="Center" 
                 HorizontalOptions="CenterAndExpand" />
-
-            <Button Text="What does the animal sound like?" Command="{Binding CalculateCommand}"/>
-
+            <Button Text="Calculate" Command="{Binding CalculateCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
