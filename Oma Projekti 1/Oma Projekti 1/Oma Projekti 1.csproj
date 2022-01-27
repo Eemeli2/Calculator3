@@ -12,9 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ViewModels\AnimalListPage.xaml.cs">
-      <DependentUpon>AnimalListPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\AnimalAbstraction.xaml.cs">
       <DependentUpon>AnimalAbstraction.xaml</DependentUpon>
     </Compile>
@@ -27,7 +24,7 @@
     <EmbeddedResource Update="Page1.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="ViewModels\AnimalListPage.xaml">
+    <EmbeddedResource Update="Views\AnimalListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MainPage.xaml">

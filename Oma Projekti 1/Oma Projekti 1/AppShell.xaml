@@ -81,8 +81,8 @@
     <FlyoutItem Title="Main" Icon="icon_about.png">
         <ShellContent Route="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Animal Abstraction" Icon="icon_about.png">
-        <ShellContent Route="Animal" ContentTemplate="{DataTemplate local:Animal}" />
+    <FlyoutItem Title="Animals" Icon="icon_about.png">
+        <ShellContent Route="Animals" ContentTemplate="{DataTemplate local:AnimalListPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Browse" Icon="icon_feed.png">
         <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
