@@ -10,12 +10,17 @@ using Xamarin.Forms.Xaml;
 namespace Oma_Projekti_1.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage
+    public partial class AnimalAbstraction : ContentPage
     {
-        public LoginPage()
+        public AnimalAbstraction()
         {
             InitializeComponent();
-            this.BindingContext = new LoginViewModel();
+            this.BindingContext = new AnimalAbstraction();
+        }
+
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
         }
     }
 }
