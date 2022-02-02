@@ -13,7 +13,9 @@ namespace Oma_Projekti_1.ViewModels
                 new IAnimal[]
                 {
                     new Cat(),
-                    new Dog()
+                    new Dog(),
+                    new Alligator(),
+                    new Crow()
                 });
         }
 

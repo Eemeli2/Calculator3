@@ -16,7 +16,11 @@ namespace Oma_Projekti_1.Views
         {
             InitializeComponent();
 
-            BindingContext = new AnimalListViewModel();
+            BindingContext = new ViewModels.AnimalListViewModel();
         }
-    }
-}
+        
+
+
+    };
+        }
+    

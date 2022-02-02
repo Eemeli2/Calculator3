@@ -4,11 +4,46 @@
              x:Class="Oma_Projekti_1.Views.AnimalListPage">
     <ContentPage.Content>
         <StackLayout>
-            <CollectionView ItemsSource="{Binding Animals}">
+            <CollectionView ItemsSource="{Binding Animals}" ItemsLayout="VerticalList">
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding Name}"/>
+                        <StackLayout> 
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                        
+                            <Label Grid.Column="1"
+                            Text="{Binding Name}" FontSize="Large"
+                             FontAttributes="Bold" />
+
+                            <Label Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding Sound}"
+                            FontAttributes="Italic"
+                            VerticalOptions="End" />
+
+                            
+                            <Label Grid.Row="2" Grid.Column="1"
+                            Text="{Binding Description, Mode=TwoWay}"  FontSize="Small"
+                             FontAttributes="None" />
+
+                                <Image Source="tapped.jpg">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                     Command="{Binding TappedCommand}"
+                                        NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                            </Grid>
+                            
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

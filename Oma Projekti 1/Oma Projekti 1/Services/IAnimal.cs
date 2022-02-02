@@ -7,7 +7,7 @@ namespace Oma_Projekti_1.Services
     public interface IAnimal
     { 
         string Name  { get ; }
-         string GetSound();
-
+        string Sound { get; }
+        string Description { get; }
     }
 }
