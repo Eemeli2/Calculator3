@@ -7,16 +7,12 @@ using Xamarin.Forms.Xaml;
 
 namespace Oma_Projekti_1.Views
 {
-    public partial class Animal : ContentPage
+    public partial class AnimalDetailPage : ContentPage
     {
-        public Animal()
+        public AnimalDetailPage()
         {
             InitializeComponent();
-
             
-
-            BindingContext = new AnimalViewModel(new Cat());
-
         }
     }
 }

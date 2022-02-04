@@ -7,16 +7,14 @@
 
   <ItemGroup>
     <PackageReference Include="Humanizer.Core" Version="2.13.14" />
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.5.0" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\AnimalAbstraction.xaml.cs">
-      <DependentUpon>AnimalAbstraction.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
+    <Compile Update="Views\AnimalDetailPage.xaml.cs">
+      <DependentUpon>AnimalDetailPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

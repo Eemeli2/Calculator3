@@ -9,5 +9,7 @@ namespace Oma_Projekti_1.Services
         string Name  { get ; }
         string Sound { get; }
         string Description { get; }
+
+        void PlaySound();
     }
 }
