@@ -4,7 +4,10 @@
              x:Class="Oma_Projekti_1.Views.AnimalListPage"
              xmlns:local="clr-namespace:Oma_Projekti_1.ViewModels" >
 
+   
+    
     <ContentPage.Content>
+        
         <StackLayout>
             <CollectionView ItemsSource="{Binding Animals}" ItemsLayout="VerticalList">
                 
