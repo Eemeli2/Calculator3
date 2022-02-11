@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.oma_projekti_1" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="29" />
+	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="30" />
 	<application android:label="Oma_Projekti_1.Android" android:theme="@style/MainTheme"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

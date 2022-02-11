@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Oma_Projekti_1.Views.AnimalDetailPage"
+             x:DataType="vm:AnimalViewModel"
+             xmlns:vm="clr-namespace:Oma_Projekti_1.ViewModels"
+             Title="{Binding Title}">
+    
+    
+    <ContentPage.Content>
+        <StackLayout>
+            
+            
+            <Label Text="{Binding Animal.Name}" FontSize="Large"/>
+            <Label Text="{Binding Animal.Description}"/>
+            <Label Text="{Binding Animal.Sound}" HorizontalOptions="Center" />
+
+            <Button Text="What does the animal sound like?" Command="{Binding PlaySoundCommand}" HorizontalOptions="Center"  BorderWidth="1"  />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

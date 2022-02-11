@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reloading.Data.UnitTest", "Reloading.Data.UnitTest\Reloading.Data.UnitTest.csproj", "{FD095718-233E-4013-8316-42DDE3436954}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{117EE2CA-0299-43F5-9FFE-BDAA62C0BB16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{117EE2CA-0299-43F5-9FFE-BDAA62C0BB16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{117EE2CA-0299-43F5-9FFE-BDAA62C0BB16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD095718-233E-4013-8316-42DDE3436954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD095718-233E-4013-8316-42DDE3436954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD095718-233E-4013-8316-42DDE3436954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD095718-233E-4013-8316-42DDE3436954}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
