@@ -9,6 +9,9 @@ namespace BulletLibrary
     /// </summary>
     public class Ammunition
     {
+        private Case? _case;
+        private Bullet? bullet;
+
         /// <summary>
         /// Gets or sets gunpoweder for ammunition.
         /// </summary>
@@ -22,16 +25,40 @@ namespace BulletLibrary
         /// <summary>
         /// Gets or sets case to be loaded.
         /// </summary>
-        public Case? Case { get; set; }
+        public Case? Case
+        {
+            get => _case;
+            set
+            {
+                if (value != null && Bullet != null && !Bullet!.Diameter!.Equals(value!.Caliber!.Diameter!))
+                {
+                    throw new InvalidOperationException("Diameters do not match");
+                }
 
-        /// <summary>
-        /// Gets or sets the Primer type of ammunition.
-        /// </summary>
-        public Primer.PrimerType PrimerType { get; set; }
+                _case = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the bullet used for making ammunition.
         /// </summary>
-        public Bullet? Bullet { get; set; }
+        public Bullet? Bullet
+        {
+            get => this.bullet;
+            set
+            {
+                if (value != null && this.Case != null && !this.Case!.Caliber!.Diameter!.Equals(value!.Diameter!))
+                {
+                    throw new InvalidOperationException("Diameters do not match");
+                }
+
+                this.bullet = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the primertype.
+        /// </summary>
+        public Primer? Primer { get; set; }
     }
 }

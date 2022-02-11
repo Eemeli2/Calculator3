@@ -9,6 +9,8 @@ namespace BulletLibrary
     /// </summary>
     public class Diameter
     {
+        private const double InchInMm = 25.4;
+
         /// <summary>
         /// Unit type for enum.
         /// </summary>
@@ -34,5 +36,26 @@ namespace BulletLibrary
         /// Gets or sets the Unit for <see cref="Diameter"/>¨.
         /// </summary>
         public Unit UnitType { get; set; }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            return obj is Diameter d && ValueInches(this).Equals(ValueInches(d));
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        private static double ValueInches(Diameter d)
+        {
+            switch (d.UnitType)
+            {
+                case Unit.Mm: return Math.Round(d.Value / InchInMm, 3);
+                default: return d.Value;
+            }
+        }
     }
 }
