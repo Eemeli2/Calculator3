@@ -30,8 +30,8 @@ namespace BulletLibrary
         public Primer.PrimerType PrimerType { get; set; }
 
         /// <summary>
-        /// Gets or sets the bullets used for making ammunition.
+        /// Gets or sets the bullet used for making ammunition.
         /// </summary>
-        public Bullets? Bullets { get; set; }
+        public Bullet? Bullet { get; set; }
     }
 }
