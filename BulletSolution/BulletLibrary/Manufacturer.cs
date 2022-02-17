@@ -13,5 +13,10 @@ namespace BulletLibrary
         /// Gets or sets Name.
         /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Id.
+        /// </summary>
+        public Guid? Id { get; set; }
     }
 }

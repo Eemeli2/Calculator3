@@ -18,5 +18,10 @@ namespace BulletLibrary
         /// Gets or sets name.
         /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id for component.
+        /// </summary>
+        public Guid Id { get; set; }
     }
 }

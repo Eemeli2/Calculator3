@@ -1,0 +1,67 @@
+﻿@page "/fetchdata"
+
+<PageTitle>Weather forecast</PageTitle>
+
+@using BulletLibrary
+@using BulletLibrary.Interfaces
+@using Reloading.Services.EF
+@using Reloading.Web.Blazor.Data
+@using System.Linq;
+
+@inject IManufacturerService ManufacturerService
+
+<h1>Manufacturers</h1>
+
+@if (manufactures == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h2>Add new Manufacturer</h2>
+
+    <input type="text" @bind="@CurrentValue" @oninput="@((e) => { CurrentValue=(string)e.Value;})"/>
+
+    <button type="submit" @onclick="HandleValidSubmit">Submit</button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var manufacturer in manufactures)
+            {
+                <tr>
+                    <td>@manufacturer.Name</td>
+                    <td>@manufacturer.Id</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+
+@code {
+    private IEnumerable<Manufacturer>? manufactures;
+
+    private string CurrentValue {get;set;} = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        manufactures = await ManufacturerService.GetAll();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await ManufacturerService.Insert(new Manufacturer
+            {
+                Name = CurrentValue
+            });
+
+        manufactures = await ManufacturerService.GetAll();
+    }
+}
