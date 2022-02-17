@@ -12,7 +12,6 @@ namespace Reloading.Services.EF
 {
     public class EntityManufacturerService : IManufacturerService
     {
-
         async Task<Manufacturer> IManufacturerService.GetById(Guid manufacturerId)
         {
             using (var db = new ReloadingContext())

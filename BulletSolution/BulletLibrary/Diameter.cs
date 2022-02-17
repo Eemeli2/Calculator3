@@ -28,6 +28,11 @@ namespace BulletLibrary
         }
 
         /// <summary>
+        /// Gets or sets the diameter id.
+        /// </summary>
+        public Guid? Id { get; set; }
+
+        /// <summary>
         /// Gets or sets the Value for <see cref="Diameter"/>.
         /// </summary>
         public double Value { get; set; }
@@ -36,6 +41,13 @@ namespace BulletLibrary
         /// Gets or sets the Unit for <see cref="Diameter"/>¨.
         /// </summary>
         public Unit UnitType { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var unit = UnitType == Unit.Mm ? "mm" : "\"";
+            return $"{Value}{unit}";
+        }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)

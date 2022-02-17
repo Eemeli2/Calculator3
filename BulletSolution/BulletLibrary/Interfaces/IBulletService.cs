@@ -15,7 +15,7 @@ namespace BulletLibrary.Interfaces
         /// </summary>
         /// <param name="bullet">bullet to insert.</param>
         /// <returns>True if succsessful otherwise false.</returns>
-        Task<bool> Insert(Bullet bullet);
+        Task<Guid> Insert(Bullet bullet);
 
         /// <summary>
         /// Get all bullets.

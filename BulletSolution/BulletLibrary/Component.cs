@@ -22,6 +22,6 @@ namespace BulletLibrary
         /// <summary>
         /// Gets or sets the id for component.
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
     }
 }

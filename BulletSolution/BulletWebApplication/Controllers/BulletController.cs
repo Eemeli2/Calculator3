@@ -33,7 +33,7 @@ namespace BulletWebApplication.Controllers
 
         [HttpPost]
         [Route("Insert")]
-        public Task<bool> Insert([FromBody] Bullet bullet)
+        public Task<Guid> Insert([FromBody] Bullet bullet)
         {
             return _bulletService.Insert(bullet);
         }

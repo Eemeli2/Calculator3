@@ -1,6 +1,6 @@
 ﻿@page "/fetchdata"
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Ammunition</PageTitle>
 
 @using BulletLibrary
 @using BulletLibrary.Interfaces
@@ -9,59 +9,167 @@
 @using System.Linq;
 
 @inject IManufacturerService ManufacturerService
+@inject IBulletService BulletService
+@inject IMeasurementService MeasurementService
 
-<h1>Manufacturers</h1>
+<h1 style="text-align:center">
+    Add Bullet
+</h1>
 
-@if (manufactures == null)
+@if (manufactures == Enumerable.Empty<Manufacturer>())
 {
     <p><em>Loading...</em></p>
 }
-else
+    else
 {
-    <h2>Add new Manufacturer</h2>
+    <div style="float:left;">
+        <h2 style="text-align:left;">Bullet details</h2>
+    </div>
 
-    <input type="text" @bind="@CurrentValue" @oninput="@((e) => { CurrentValue=(string)e.Value;})"/>
 
-    <button type="submit" @onclick="HandleValidSubmit">Submit</button>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Id</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div style="float:right;" >
+        <h2 style="text-align:left;">Bullet manufacturer</h2>
+
+        <input type="text" @bind="@NewManufacturerName" @oninput="@((e) => { NewManufacturerName=(string)e.Value;})"/>
+        <button type="submit" @onclick="AddNewManufacturer">Submit</button>
+
+        <select class="form-control" @bind="@manufacturerName">
+            <option selected disabled value="-1">Choose manufacturer</option>
             @foreach (var manufacturer in manufactures)
             {
-                <tr>
-                    <td>@manufacturer.Name</td>
-                    <td>@manufacturer.Id</td>
-                </tr>
+                <option value="@manufacturer.Name">@manufacturer.Name</option>
             }
-        </tbody>
-    </table>
+        </select>
 
+        <h2 style="text-align:left;">Mass</h2>
 
+        <input type="text" @bind="@massValue" @oninput="@((e) => { massValue=(string)e.Value;})"/>
+        <select class="form-control" @bind="@massUnit">
+            <option selected value="@Mass.Unit.Grain.ToString()">@Mass.Unit.Grain.ToString()</option>
+            <option value="@Mass.Unit.Gram.ToString()">@Mass.Unit.Gram.ToString()</option>
+        </select>
+        <button type="submit" @onclick="AddNewMass">Submit</button>
+
+        <select class="form-control" @bind="@mass">
+            <option selected disabled value="-1">Choose mass</option>
+            @foreach (var mass in masses)
+            {
+                <option value="@mass.ToString()">@mass.ToString()</option>
+            }
+
+        </select>
+          <h2 style="text-align:left;">Diameter</h2>
+
+        <input type="text" @bind="@diameterValue" @oninput="@((e) => { diameterValue=(string)e.Value;})"/>
+        <select class="form-control" @bind="@diameterUnit">
+            <option selected value="@Diameter.Unit.Inch.ToString()">@Diameter.Unit.Inch.ToString()</option>
+            <option value="@Diameter.Unit.Mm.ToString()">@Diameter.Unit.Mm.ToString()</option>
+        </select>
+        <button type="submit" @onclick="AddNewDiameter">Submit</button>
+
+        <select class="form-control" @bind="@diameter">
+            <option selected disabled value="-1">Choose diameter</option>
+            @foreach (var diameter in diameters)
+            {
+                <option value="@diameter.ToString()">@diameter.ToString()</option>
+            }
+             </select>
+    </div>
 }
 
 @code {
-    private IEnumerable<Manufacturer>? manufactures;
+    private IEnumerable<Manufacturer> manufactures = Enumerable.Empty<Manufacturer>();
+    private IEnumerable<Bullet> bullets = Enumerable.Empty<Bullet>();
+    private IEnumerable<Mass> masses = Enumerable.Empty<Mass>();
+    private IEnumerable<Diameter> diameters = Enumerable.Empty<Diameter>();
 
-    private string CurrentValue {get;set;} = string.Empty;
+    private string NewManufacturerName {get;set;} = string.Empty;
+
+    private string manufacturerName { get; set; }
+    private string mass { get; set; }
+    private string diameter { get; set; }
+    private string diameterValue { get; set; }
+    private string massValue { get; set; }
+
+    private string diameterUnit { get; set; } = Diameter.Unit.Inch.ToString();
+    private string massUnit { get; set; } = Mass.Unit.Grain.ToString();
 
     protected override async Task OnInitializedAsync()
     {
         manufactures = await ManufacturerService.GetAll();
+        bullets = await BulletService.GetAll();
+        masses = await MeasurementService.GetAllMasses();
+        diameters = await MeasurementService.GetAllDiameters();
     }
 
-    private async Task HandleValidSubmit()
+    private async Task AddNewManufacturer()
     {
         await ManufacturerService.Insert(new Manufacturer
             {
-                Name = CurrentValue
+                Name = NewManufacturerName
             });
 
         manufactures = await ManufacturerService.GetAll();
+    }
+
+    private async Task AddNewMass()
+    {
+        if (!double.TryParse(massValue, out double mv))
+        {
+            // error
+            return;
+        }
+
+        if (!Enum.TryParse<Mass.Unit>(massUnit, out Mass.Unit unit))
+        {
+            // error
+            return;
+        }
+
+        var mass = new Mass
+            {
+                Value = mv,
+                UnitType = unit
+            };
+
+        await MeasurementService.InsertMass(mass);
+
+        masses = await MeasurementService.GetAllMasses();
+    }
+
+    private async Task AddNewDiameter()
+    {
+        if (!double.TryParse(diameterValue, out double mv))
+        {
+            //  error placeholder
+            return;
+        }
+        if(!Enum.TryParse<Diameter.Unit>(diameterUnit, out Diameter.Unit unit))
+        {
+            // error place holder
+            return;
+        }
+        var diameter = new Diameter
+            {
+                Value = mv,
+                UnitType = unit
+            };
+                   await MeasurementService.InsertDiameter(diameter);
+
+                    diameters = await MeasurementService.GetAllDiameters();
+    }
+
+    private async Task AddNewBullet()
+    {
+    
+        var bullet = new Bullet
+        {
+
+        };
+
+        await BulletService.Insert(bullet);
+
+        bullets = await BulletService.GetAll();
     }
 }

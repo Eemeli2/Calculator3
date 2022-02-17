@@ -26,6 +26,11 @@ namespace BulletLibrary
         }
 
         /// <summary>
+        /// Gets or sets the mass id.
+        /// </summary>
+        public Guid? Id { get; set; }
+
+        /// <summary>
         /// Gets or sets value for <see cref="Mass"/>.
         /// </summary>
         public double Value { get; set; }
@@ -34,5 +39,12 @@ namespace BulletLibrary
         /// Gets or sets Unit for <see cref="Mass"/>.
         /// </summary>
         public Unit UnitType { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var unit = UnitType == Unit.Grain ? "gr" : "g";
+            return $"{Value}{unit}";
+        }
     }
 }

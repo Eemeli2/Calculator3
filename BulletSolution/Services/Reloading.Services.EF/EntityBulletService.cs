@@ -10,28 +10,36 @@ using System.Threading.Tasks;
 
 namespace Reloading.Services.EF
 {
-    public class EntityBulletService : DbContext, IBulletService
+    public class EntityBulletService : IBulletService
     {
-        public DbSet<Bullet> Bullets { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public async Task<IEnumerable<Bullet>> GetAll()
         {
-            optionsBuilder.UseNpgsql("Host=winterfell;Database=reload;Username=reloader;Password=reload");
+            using (var db = new ReloadingContext())
+            {
+                return await db.Bullets.ToListAsync();
+            }
+                
         }
 
-        public Task<IEnumerable<Bullet>> GetAll()
+        public async Task<IEnumerable<Bullet>> GetAllByDiameter(Diameter diameter)
         {
-            throw new NotImplementedException();
+            using (var db = new ReloadingContext())
+            {
+                return db.Bullets.Where(b => diameter.Equals(b.Diameter));
+            }
+
         }
 
-        public Task<IEnumerable<Bullet>> GetAllByDiameter(Diameter diameter)
+        public async Task<Guid> Insert(Bullet bullet)
         {
-            throw new NotImplementedException();
-        }
+            using (var db = new ReloadingContext())
+            {
+                var b = await db.Bullets.AddAsync(bullet);
+                await db.SaveChangesAsync();
+                return bullet.Id.Value;
 
-        public Task<bool> Insert(Bullet bullet)
-        {
-            throw new NotImplementedException();
+            }
+
         }
     }
 }

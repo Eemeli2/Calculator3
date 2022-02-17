@@ -12,6 +12,11 @@ namespace Reloading.Services.EF
     {
         public DbSet<Manufacturer> Manufacturers { get; set; }
 
+        public DbSet<Bullet> Bullets { get; set; }
+
+        public DbSet<Diameter> Diameters { get; set; }  
+
+        public DbSet<Mass> Masses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

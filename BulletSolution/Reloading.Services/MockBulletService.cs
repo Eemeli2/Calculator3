@@ -23,11 +23,12 @@ namespace Reloading.Services
             return await Task.FromResult(matches);
         }
 
-        public async Task<bool> Insert(Bullet bullet)
+        public async Task<Guid> Insert(Bullet bullet)
         {
             _bullets.Add(bullet);
+            bullet.Id = bullet.Id ?? Guid.NewGuid();
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(bullet.Id.Value);
         }
     }
 }

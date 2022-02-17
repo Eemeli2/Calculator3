@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<IManufacturerService, EntityManufacturerService>();
+builder.Services.AddScoped<IBulletService, EntityBulletService>();
+builder.Services.AddScoped<IMeasurementService, EntityMeasurementService>();
 
 var app = builder.Build();
 
