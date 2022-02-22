@@ -8,6 +8,7 @@
 @using Reloading.Web.Blazor.Data
 @using System.Linq;
 
+@inject IJSRuntime JsRuntime
 @inject IManufacturerService ManufacturerService
 @inject IBulletService BulletService
 @inject IMeasurementService MeasurementService
@@ -22,10 +23,6 @@
 }
     else
 {
-    <div style="float:left;">
-        <h2 style="text-align:left;">Bullet details</h2>
-    </div>
-
 
 
     <div style="float:right;" >
@@ -62,11 +59,13 @@
           <h2 style="text-align:left;">Diameter</h2>
 
         <input type="text" @bind="@diameterValue" @oninput="@((e) => { diameterValue=(string)e.Value;})"/>
+         <button type="submit" @onclick="AddNewDiameter">Submit</button>
+
         <select class="form-control" @bind="@diameterUnit">
-            <option selected value="@Diameter.Unit.Inch.ToString()">@Diameter.Unit.Inch.ToString()</option>
-            <option value="@Diameter.Unit.Mm.ToString()">@Diameter.Unit.Mm.ToString()</option>
+            <option selected value="@Diameter.Unit.Mm.ToString()">@Diameter.Unit.Mm.ToString()</option>
+            <option value="@Diameter.Unit.Inch.ToString()">@Diameter.Unit.Inch.ToString()</option>
         </select>
-        <button type="submit" @onclick="AddNewDiameter">Submit</button>
+      
 
         <select class="form-control" @bind="@diameter">
             <option selected disabled value="-1">Choose diameter</option>
@@ -74,8 +73,36 @@
             {
                 <option value="@diameter.ToString()">@diameter.ToString()</option>
             }
-             </select>
+        </select>
     </div>
+
+      <div style="float:left;">
+        <h1 style="text-align:left;">Bullet details</h1>
+        <p>
+       
+        </p>
+            <p>
+             <label type="text" >
+             Manufacturer name: @manufacturerName
+             </label>
+        </p>
+          <p>
+             <label type="text" >
+            Bullet mass: @mass
+             </label>
+        </p>
+          <p>
+              <label type="text" >
+                  Diameter: @diameter
+              </label>
+        </p>
+                <label type="text" >
+                 Bullet name: 
+                </label>
+              <input type="text" @bind="@bulletName" @oninput="@((e) => { NewBullet=(string)e.Value;})"/>
+              <button type="submit" @onclick="AddNewBullet">Submit</button>
+
+       </div>
 }
 
 @code {
@@ -85,12 +112,14 @@
     private IEnumerable<Diameter> diameters = Enumerable.Empty<Diameter>();
 
     private string NewManufacturerName {get;set;} = string.Empty;
+    private string NewBullet { get; set; } = string.Empty;
 
     private string manufacturerName { get; set; }
     private string mass { get; set; }
     private string diameter { get; set; }
     private string diameterValue { get; set; }
     private string massValue { get; set; }
+    private string bulletName { get; set; }
 
     private string diameterUnit { get; set; } = Diameter.Unit.Inch.ToString();
     private string massUnit { get; set; } = Mass.Unit.Grain.ToString();
@@ -155,20 +184,53 @@
                 Value = mv,
                 UnitType = unit
             };
-                   await MeasurementService.InsertDiameter(diameter);
+        await MeasurementService.InsertDiameter(diameter);
 
-                    diameters = await MeasurementService.GetAllDiameters();
+        diameters = await MeasurementService.GetAllDiameters();
     }
 
     private async Task AddNewBullet()
     {
-    
+        if (string.IsNullOrWhiteSpace(bulletName))
+        {
+            return;
+        }
+
+        var manufacturer = manufactures.FirstOrDefault(m => m.Name!.Equals(manufacturerName));
+        if (manufacturer == null)
+        {
+            //await JsRuntime.InvokeAsync<bool>("Error", "Manufacturer is not selected.");
+            return;
+        }
+
+        var d = diameters.FirstOrDefault(d => d.ToString().Equals(diameter));
+        //Diameter diameter = null;
+        if (d == null)
+        {
+            return;
+        }
+
+        var m = masses.FirstOrDefault(m2 => m2.ToString().Equals(mass));
+        if (m == null) 
+        {
+            return;
+        }
+
         var bullet = new Bullet
         {
-
+            Name = NewBullet,
+            Manufacturer = manufacturer,
+            Diameter = d,
+            Mass = m
         };
-
-        await BulletService.Insert(bullet);
+        try
+        {
+            await BulletService.Insert(bullet);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
 
         bullets = await BulletService.GetAll();
     }
