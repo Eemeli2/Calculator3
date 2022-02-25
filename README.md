@@ -32,4 +32,6 @@ What has been implemented: Web page to display and insert bullet data to a datab
 ### Changelog /// Current objectives:
 1. Figure out what is causing the Blazor web application to not function properly.
 the cause: Something added/or not properly implemented with Caliber and its components is causing the web application to crash.
-Edit EntityCaliberService.cs and possibly EntityDiameterService.cs
+~~Edit EntityCaliberService.cs and possibly EntityDiameterService.cs~~
+Caliber information had not been migrated to the database and this caused the issues.
+
