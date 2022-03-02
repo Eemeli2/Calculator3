@@ -4,10 +4,6 @@
 @using Reloading.Web.Blazor.Data
 @using System.Linq;
 
-
-@inject IJSRuntime JsRuntime
-@inject IManufacturerService ManufacturerService
-@inject IBulletService BulletService
 @inject IMeasurementService MeasurementService
 
 @if (diameters == Enumerable.Empty<Diameter>())
@@ -30,40 +26,33 @@
         </select>
       
 
-        <select class="form-control" @bind="@diameter">
-            <option selected disabled value="-1">Choose diameter</option>
+        <select class="form-control" @onchange="@((args) => OnChange(args))">
+            <option selected disabled value=null>Choose diameter</option>
             @foreach (var diameter in diameters)
             {
-                <option value="@diameter.ToString()">@diameter.ToString()</option>
-
+                <option value="@diameter">@diameter.ToString()</option>
             }
         </select>
     </div>
+}
 
-      <div>
-          <p>
-
-          </p>
-             <label type="text" >
-             Selected diameter: @diameter
-             </label>
-        
-        
-              </div>
+@code {
 
 
-    @code {
     private IEnumerable<Diameter> diameters = Enumerable.Empty<Diameter>();
-
-    private string diameter { get; set; }
+    public Diameter? SelectedDiameter { get; set; }
     private string diameterValue { get; set; }
 
     private string diameterUnit { get; set; } = Diameter.Unit.Inch.ToString();
-    private string massUnit { get; set; } = Mass.Unit.Grain.ToString();
 
     protected override async Task OnInitializedAsync()
     {
         diameters = await MeasurementService.GetAllDiameters();
+    }
+
+    private void OnChange(ChangeEventArgs args)
+    {
+        SelectedDiameter = diameters.FirstOrDefault(d => d.ToString().Equals(args.Value));
     }
 
     private async Task AddNewDiameter()
@@ -86,7 +75,6 @@
         await MeasurementService.InsertDiameter(diameter);
 
         diameters = await MeasurementService.GetAllDiameters();
-    }
 
     }
 }

@@ -59,7 +59,7 @@
        
         
         
-          <h2 style="text-align:left;">Diameter</h2>
+       @*   <h2 style="text-align:left;">Diameter</h2>
 
         <input type="text" @bind="@diameterValue" @oninput="@((e) => { diameterValue=(string)e.Value;})"/>
          <button type="submit" @onclick="AddNewDiameter">Submit</button>
@@ -78,10 +78,9 @@
 
             }
         </select>
+        *@
         
-        
-
-        
+        <DiameterComponent @ref="diameterComponent"/>
 
     </div>
 
@@ -100,11 +99,11 @@
             Bullet mass: @mass
              </label>
         </p>
-          <p>
+         @* <p>
               <label type="text" >
                   Diameter: @diameter
               </label>
-        </p>
+        </p>*@
                 <label type="text" >
                  Bullet name: 
                 </label>
@@ -115,6 +114,8 @@
 }
 
 @code {
+
+    private DiameterComponent? diameterComponent;
     private IEnumerable<Manufacturer> manufactures = Enumerable.Empty<Manufacturer>();
     private IEnumerable<Bullet> bullets = Enumerable.Empty<Bullet>();
     private IEnumerable<Mass> masses = Enumerable.Empty<Mass>();
@@ -125,8 +126,6 @@
 
     private string manufacturerName { get; set; }
     private string mass { get; set; }
-    private string diameter { get; set; }
-    private string diameterValue { get; set; }
     private string massValue { get; set; }
     private string bulletName { get; set; }
 
@@ -176,28 +175,6 @@
         masses = await MeasurementService.GetAllMasses();
     }
 
-    private async Task AddNewDiameter()
-    {
-        if (!double.TryParse(diameterValue, out double mv))
-        {
-            //  error placeholder
-            return;
-        }
-        if(!Enum.TryParse<Diameter.Unit>(diameterUnit, out Diameter.Unit unit))
-        {
-            // error place holder
-            return;
-        }
-        var diameter = new Diameter
-            {
-                Value = mv,
-                UnitType = unit
-            };
-        await MeasurementService.InsertDiameter(diameter);
-
-        diameters = await MeasurementService.GetAllDiameters();
-    }
-
     private async Task AddNewBullet()
     {
         if (string.IsNullOrWhiteSpace(bulletName))
@@ -212,9 +189,7 @@
             return;
         }
 
-        var d = diameters.FirstOrDefault(d => d.ToString().Equals(diameter));
-        //Diameter diameter = null;
-        if (d == null)
+        if (diameterComponent?.SelectedDiameter == null)
         {
             return;
         }
@@ -229,7 +204,7 @@
         {
             Name = NewBullet,
             Manufacturer = manufacturer,
-            Diameter = d,
+            Diameter = diameterComponent!.SelectedDiameter,
             Mass = m
         };
         try
