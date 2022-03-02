@@ -7,8 +7,13 @@ namespace BulletLibrary
     /// <summary>
     /// Public class Caliber.
     /// </summary>
-    public class Caliber : Diameter
+    public class Caliber
     {
+        /// <summary>
+        /// Gets or sets the caliber id.
+        /// </summary>
+        public Guid? Id { get; set; }
+
         /// <summary>
         /// Gets or sets the primertype.
         /// </summary>

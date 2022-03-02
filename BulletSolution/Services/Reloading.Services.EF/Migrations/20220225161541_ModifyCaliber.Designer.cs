@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Reloading.Services.EF;
@@ -11,9 +12,10 @@ using Reloading.Services.EF;
 namespace Reloading.Services.EF.Migrations
 {
     [DbContext(typeof(ReloadingContext))]
-    partial class ReloadingContextModelSnapshot : ModelSnapshot
+    [Migration("20220225161541_ModifyCaliber")]
+    partial class ModifyCaliber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Reloading.Services.EF;
@@ -11,9 +12,10 @@ using Reloading.Services.EF;
 namespace Reloading.Services.EF.Migrations
 {
     [DbContext(typeof(ReloadingContext))]
-    partial class ReloadingContextModelSnapshot : ModelSnapshot
+    [Migration("20220224205642_EntityCaliberService")]
+    partial class EntityCaliberService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,33 +53,15 @@ namespace Reloading.Services.EF.Migrations
                     b.ToTable("Bullets");
                 });
 
-            modelBuilder.Entity("BulletLibrary.Caliber", b =>
-                {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("DiameterId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<int>("PrimerType")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DiameterId");
-
-                    b.ToTable("Calibers");
-                });
-
             modelBuilder.Entity("BulletLibrary.Diameter", b =>
                 {
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("UnitType")
                         .HasColumnType("integer");
@@ -88,6 +72,8 @@ namespace Reloading.Services.EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Diameters");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Diameter");
                 });
 
             modelBuilder.Entity("BulletLibrary.Manufacturer", b =>
@@ -119,6 +105,24 @@ namespace Reloading.Services.EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Masses");
+                });
+
+            modelBuilder.Entity("BulletLibrary.Caliber", b =>
+                {
+                    b.HasBaseType("BulletLibrary.Diameter");
+
+                    b.Property<Guid?>("DiameterId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PrimerType")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("DiameterId");
+
+                    b.HasDiscriminator().HasValue("Caliber");
                 });
 
             modelBuilder.Entity("BulletLibrary.Bullet", b =>

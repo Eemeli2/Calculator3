@@ -1,0 +1,70 @@
+﻿@page "/caliberpage"
+
+<PageTitle>Calibers</PageTitle>
+
+@using BulletLibrary
+@using BulletLibrary.Interfaces
+@using Reloading.Services.EF
+@using Reloading.Web.Blazor.Data
+@using System.Linq;
+@using static BulletLibrary.Primer
+
+@inherits CaliberViewModel
+
+
+<h1 style="text-align:center">
+    Add Caliber
+</h1>
+
+@if (Calibers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+	
+		<div style="float:left">
+			<h2 style="text-align:left;">Caliber Details</h2>
+			<p>
+			</p>
+			<DiameterComponent>
+			</DiameterComponent>
+			<p>
+			</p>
+
+
+				<select class="form-control" @bind="@SelectedPrimer">
+				<option selected disabled value="-1">Choose Primer</option>
+
+			 @foreach (var primerType in Enum.GetValues<Primer.PrimerType>())
+            {
+				 <option value="@primerType.ToString()">@primerType.ToString()</option>
+            }
+		</select>
+		
+		<p>
+
+		</p>
+		<label type="text">
+				Primer Type: @SelectedPrimer
+			</label>
+			<p>
+			</p>
+
+			
+			<p>
+			</p>
+			<label>
+				Caliber name:
+			</label>
+				<input type="text" @bind-value="NewCaliberName"/>
+				<button @onclick="Insert">Submit</button>
+
+			 @foreach (var caliber in Calibers)
+			{
+		
+			}
+		</div>
+
+}

@@ -8,6 +8,7 @@
 @using Reloading.Web.Blazor.Data
 @using System.Linq;
 
+
 @inject IJSRuntime JsRuntime
 @inject IManufacturerService ManufacturerService
 @inject IBulletService BulletService
@@ -23,7 +24,6 @@
 }
     else
 {
-
 
     <div style="float:right;" >
         <h2 style="text-align:left;">Bullet manufacturer</h2>
@@ -54,8 +54,11 @@
             {
                 <option value="@mass.ToString()">@mass.ToString()</option>
             }
-
         </select>
+
+       
+        
+        
           <h2 style="text-align:left;">Diameter</h2>
 
         <input type="text" @bind="@diameterValue" @oninput="@((e) => { diameterValue=(string)e.Value;})"/>
@@ -72,8 +75,14 @@
             @foreach (var diameter in diameters)
             {
                 <option value="@diameter.ToString()">@diameter.ToString()</option>
+
             }
         </select>
+        
+        
+
+        
+
     </div>
 
       <div style="float:left;">

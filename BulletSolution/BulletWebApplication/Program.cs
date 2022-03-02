@@ -18,6 +18,9 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddSingleton<IBulletService, MockBulletService>()
     .AddSingleton<IManufacturerService, EntityManufacturerService>();
+    
+
+
 
 
 var app = builder.Build();

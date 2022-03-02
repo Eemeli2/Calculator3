@@ -1,10 +1,5 @@
 ﻿using BulletLibrary;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reloading.Services.EF
 {
@@ -17,6 +12,8 @@ namespace Reloading.Services.EF
         public DbSet<Diameter> Diameters { get; set; }  
 
         public DbSet<Mass> Masses { get; set; }
+
+        public DbSet<Caliber> Calibers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

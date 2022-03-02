@@ -12,6 +12,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<IManufacturerService, EntityManufacturerService>();
 builder.Services.AddScoped<IBulletService, EntityBulletService>();
 builder.Services.AddScoped<IMeasurementService, EntityMeasurementService>();
+builder.Services.AddScoped<ICaliberService, EntityCaliberService>();
+builder.Services.AddScoped<CaliberViewModel, CaliberViewModel>();
 
 var app = builder.Build();
 

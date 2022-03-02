@@ -5,4 +5,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\Clients\Reloading.Web.Blazor\Pages\MyComponent.razor" Link="MyComponent.razor" />
+  </ItemGroup>
+
 </Project>

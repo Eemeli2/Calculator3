@@ -1,0 +1,92 @@
+﻿@using BulletLibrary
+@using BulletLibrary.Interfaces
+@using Reloading.Services.EF
+@using Reloading.Web.Blazor.Data
+@using System.Linq;
+
+
+@inject IJSRuntime JsRuntime
+@inject IManufacturerService ManufacturerService
+@inject IBulletService BulletService
+@inject IMeasurementService MeasurementService
+
+@if (diameters == Enumerable.Empty<Diameter>())
+{
+    <p><em>Loading...</em></p>
+}
+    else
+{
+    <div>
+         
+          <label style="float:left;" type="text"> Diameter: </label>
+      
+
+        <input type="text" @bind="@diameterValue" @oninput="@((e) => { diameterValue=(string)e.Value;})"/>
+         <button type="submit" @onclick="AddNewDiameter">Submit</button>
+
+        <select class="form-control" @bind="@diameterUnit">
+            <option selected value="@Diameter.Unit.Mm.ToString()">@Diameter.Unit.Mm.ToString()</option>
+            <option value="@Diameter.Unit.Inch.ToString()">@Diameter.Unit.Inch.ToString()</option>
+        </select>
+      
+
+        <select class="form-control" @bind="@diameter">
+            <option selected disabled value="-1">Choose diameter</option>
+            @foreach (var diameter in diameters)
+            {
+                <option value="@diameter.ToString()">@diameter.ToString()</option>
+
+            }
+        </select>
+    </div>
+
+      <div>
+          <p>
+
+          </p>
+             <label type="text" >
+             Selected diameter: @diameter
+             </label>
+        
+        
+              </div>
+
+
+    @code {
+    private IEnumerable<Diameter> diameters = Enumerable.Empty<Diameter>();
+
+    private string diameter { get; set; }
+    private string diameterValue { get; set; }
+
+    private string diameterUnit { get; set; } = Diameter.Unit.Inch.ToString();
+    private string massUnit { get; set; } = Mass.Unit.Grain.ToString();
+
+    protected override async Task OnInitializedAsync()
+    {
+        diameters = await MeasurementService.GetAllDiameters();
+    }
+
+    private async Task AddNewDiameter()
+    {
+        if (!double.TryParse(diameterValue, out double mv))
+        {
+            //  error placeholder
+            return;
+        }
+        if(!Enum.TryParse<Diameter.Unit>(diameterUnit, out Diameter.Unit unit))
+        {
+            // error place holder
+            return;
+        }
+        var diameter = new Diameter
+            {
+                Value = mv,
+                UnitType = unit
+            };
+        await MeasurementService.InsertDiameter(diameter);
+
+        diameters = await MeasurementService.GetAllDiameters();
+    }
+
+    }
+}
