@@ -34,4 +34,11 @@ What has been implemented: Web page to display and insert bullet data to a datab
 the cause: Something added/or not properly implemented with Caliber and its components is causing the web application to crash.
 ~~Edit EntityCaliberService.cs and possibly EntityDiameterService.cs~~
 Caliber information had not been migrated to the database and this caused the issues.
+Solution: after adding a new service, migrate them to the database on the package manager console with the commands "Add-migration" <migration name> and "Update-database"
+
+2.  Use a Razor component to implement diameter so code is re-usable on other pages. Do this for every component. Start by moving c# and html code from fetchdata.razor to their own respective components like DiameterComponent (already done) to reduce re-use of code.
+  
+
+
+
 
