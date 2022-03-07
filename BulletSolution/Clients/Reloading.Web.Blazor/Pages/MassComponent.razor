@@ -1,0 +1,83 @@
+﻿
+@using BulletLibrary
+@using BulletLibrary.Interfaces
+@using Reloading.Services.EF
+@using Reloading.Web.Blazor.Data
+@using System.Linq;
+
+@inject IMeasurementService MeasurementService
+
+@if (masses == Enumerable.Empty<Mass>())
+{
+    <p><em>Loading...</em></p>
+}
+    else
+{
+    <div>
+           <label style="text-align:left;">Mass: </label>
+
+        <input type="text" @bind="@massValue" @oninput="@((e) => { massValue=(string)e.Value;})"/>
+          <button type="submit" @onclick="AddNewMass">Submit</button>
+
+        <select class="form-control" @bind="@massUnit">
+            <option selected value="@Mass.Unit.Grain.ToString()">@Mass.Unit.Grain.ToString()</option>
+            <option value="@Mass.Unit.Gram.ToString()">@Mass.Unit.Gram.ToString()</option>
+        </select>
+        
+
+        <select class="form-control" @onchange="@((args) => OnChange(args))">
+            <option selected disabled value="value">Choose mass</option>
+            @foreach (var mass in masses)
+            {
+                <option value="@mass.ToString()">@mass.ToString()</option>
+            }
+        </select>
+
+    </div>
+
+}
+
+@code {
+    private IEnumerable<Mass> masses = Enumerable.Empty<Mass>();
+
+
+    public Mass? SelectedMass { get; set; }
+    private string massValue { get; set; }
+
+    private string massUnit { get; set; } = Mass.Unit.Grain.ToString();
+
+    protected override async Task OnInitializedAsync()
+    {
+        masses = await MeasurementService.GetAllMasses();
+    }
+
+     private void OnChange(ChangeEventArgs args)
+    {
+        SelectedMass = masses.FirstOrDefault(d => d.ToString().Equals(args.Value));
+    }
+
+    private async Task AddNewMass()
+    {
+        if (!double.TryParse(massValue, out double mv))
+        {
+            // error
+            return;
+        }
+
+        if (!Enum.TryParse<Mass.Unit>(massUnit, out Mass.Unit unit))
+        {
+            // error
+            return;
+        }
+
+        var mass = new Mass
+            {
+                Value = mv,
+                UnitType = unit
+            };
+
+        await MeasurementService.InsertMass(mass);
+
+        masses = await MeasurementService.GetAllMasses();
+    }
+}

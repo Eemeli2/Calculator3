@@ -32,7 +32,13 @@ namespace Reloading.Services.EF
         {
             using (var db = new ReloadingContext())
             {
-               var c = await db.Calibers.AddAsync(caliber);
+
+                if (caliber.Diameter!.Id.HasValue) db.Diameters.Attach(caliber.Diameter!);
+               
+
+
+
+                var c = await db.Calibers.AddAsync(caliber);
                await db.SaveChangesAsync();
                return caliber.Id.Value;
             }

@@ -12,6 +12,7 @@
 @inherits CaliberViewModel
 
 
+
 <h1 style="text-align:center">
     Add Caliber
 </h1>
@@ -28,10 +29,11 @@ else
 			<h2 style="text-align:left;">Caliber Details</h2>
 			<p>
 			</p>
-			<DiameterComponent>
-			</DiameterComponent>
+				<DiameterComponent @ref="DiameterComponent"/>
+
 			<p>
 			</p>
+		
 
 
 				<select class="form-control" @bind="@SelectedPrimer">
@@ -66,5 +68,4 @@ else
 		
 			}
 		</div>
-
 }

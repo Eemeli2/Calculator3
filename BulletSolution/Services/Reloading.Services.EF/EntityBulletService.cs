@@ -42,6 +42,7 @@ namespace Reloading.Services.EF
                 if (bullet.Mass!.Id.HasValue) db.Masses.Attach(bullet.Mass!);
                 if (bullet.Manufacturer!.Id.HasValue) db.Manufacturers.Attach(bullet.Manufacturer!);
 
+
                 //db.Manufacturers.Attach(bullet.Manufacturer!);
                 //db.Diameters.Attach(bullet.Diameter!);
                 //db.Masses.Attach(bullet.Mass!);

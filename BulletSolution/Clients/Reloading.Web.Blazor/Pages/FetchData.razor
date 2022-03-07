@@ -38,7 +38,7 @@
                 <option value="@manufacturer.Name">@manufacturer.Name</option>
             }
         </select>
-
+@*
         <h2 style="text-align:left;">Mass</h2>
 
         <input type="text" @bind="@massValue" @oninput="@((e) => { massValue=(string)e.Value;})"/>
@@ -54,33 +54,17 @@
             {
                 <option value="@mass.ToString()">@mass.ToString()</option>
             }
-        </select>
-
-       
-        
-        
-       @*   <h2 style="text-align:left;">Diameter</h2>
-
-        <input type="text" @bind="@diameterValue" @oninput="@((e) => { diameterValue=(string)e.Value;})"/>
-         <button type="submit" @onclick="AddNewDiameter">Submit</button>
-
-        <select class="form-control" @bind="@diameterUnit">
-            <option selected value="@Diameter.Unit.Mm.ToString()">@Diameter.Unit.Mm.ToString()</option>
-            <option value="@Diameter.Unit.Inch.ToString()">@Diameter.Unit.Inch.ToString()</option>
-        </select>
-      
-
-        <select class="form-control" @bind="@diameter">
-            <option selected disabled value="-1">Choose diameter</option>
-            @foreach (var diameter in diameters)
-            {
-                <option value="@diameter.ToString()">@diameter.ToString()</option>
-
-            }
-        </select>
-        *@
+        </select>*@
+        <p>
+        </p>
         
         <DiameterComponent @ref="diameterComponent"/>
+        <p>
+        </p>
+
+        <MassComponent @ref="massComponent"/>
+        <p>
+        </p>
 
     </div>
 
@@ -94,12 +78,12 @@
              Manufacturer name: @manufacturerName
              </label>
         </p>
-          <p>
+       @*   <p>
              <label type="text" >
             Bullet mass: @mass
              </label>
         </p>
-         @* <p>
+          <p>
               <label type="text" >
                   Diameter: @diameter
               </label>
@@ -116,28 +100,26 @@
 @code {
 
     private DiameterComponent? diameterComponent;
+    private MassComponent? massComponent;
     private IEnumerable<Manufacturer> manufactures = Enumerable.Empty<Manufacturer>();
     private IEnumerable<Bullet> bullets = Enumerable.Empty<Bullet>();
-    private IEnumerable<Mass> masses = Enumerable.Empty<Mass>();
-    private IEnumerable<Diameter> diameters = Enumerable.Empty<Diameter>();
+    //private IEnumerable<Mass> masses = Enumerable.Empty<Mass>();
 
     private string NewManufacturerName {get;set;} = string.Empty;
     private string NewBullet { get; set; } = string.Empty;
 
     private string manufacturerName { get; set; }
-    private string mass { get; set; }
-    private string massValue { get; set; }
+    //private string mass { get; set; }
+    //private string massValue { get; set; }
     private string bulletName { get; set; }
 
-    private string diameterUnit { get; set; } = Diameter.Unit.Inch.ToString();
     private string massUnit { get; set; } = Mass.Unit.Grain.ToString();
 
     protected override async Task OnInitializedAsync()
     {
         manufactures = await ManufacturerService.GetAll();
         bullets = await BulletService.GetAll();
-        masses = await MeasurementService.GetAllMasses();
-        diameters = await MeasurementService.GetAllDiameters();
+        //masses = await MeasurementService.GetAllMasses();
     }
 
     private async Task AddNewManufacturer()
@@ -150,30 +132,30 @@
         manufactures = await ManufacturerService.GetAll();
     }
 
-    private async Task AddNewMass()
-    {
-        if (!double.TryParse(massValue, out double mv))
-        {
-            // error
-            return;
-        }
+    //private async Task AddNewMass()
+    //{
+    //    if (!double.TryParse(massValue, out double mv))
+    //    {
+    //        // error
+    //        return;
+    //    }
 
-        if (!Enum.TryParse<Mass.Unit>(massUnit, out Mass.Unit unit))
-        {
-            // error
-            return;
-        }
+    //    if (!Enum.TryParse<Mass.Unit>(massUnit, out Mass.Unit unit))
+    //    {
+    //        // error
+    //        return;
+    //    }
 
-        var mass = new Mass
-            {
-                Value = mv,
-                UnitType = unit
-            };
+    //    var mass = new Mass
+    //        {
+    //            Value = mv,
+    //            UnitType = unit
+    //        };
 
-        await MeasurementService.InsertMass(mass);
+    //    await MeasurementService.InsertMass(mass);
 
-        masses = await MeasurementService.GetAllMasses();
-    }
+    //    masses = await MeasurementService.GetAllMasses();
+    //}
 
     private async Task AddNewBullet()
     {
@@ -185,7 +167,11 @@
         var manufacturer = manufactures.FirstOrDefault(m => m.Name!.Equals(manufacturerName));
         if (manufacturer == null)
         {
-            //await JsRuntime.InvokeAsync<bool>("Error", "Manufacturer is not selected.");
+
+            return;
+        }
+        if (massComponent?.SelectedMass == null)
+        {
             return;
         }
 
@@ -194,18 +180,19 @@
             return;
         }
 
-        var m = masses.FirstOrDefault(m2 => m2.ToString().Equals(mass));
-        if (m == null) 
-        {
-            return;
-        }
+        //var m = masses.FirstOrDefault(m2 => m2.ToString().Equals(mass));
+        //if (m == null) 
+        //{
+        //    return;
+        //}
 
         var bullet = new Bullet
         {
             Name = NewBullet,
             Manufacturer = manufacturer,
             Diameter = diameterComponent!.SelectedDiameter,
-            Mass = m
+            Mass = massComponent!.SelectedMass
+            //Mass = m
         };
         try
         {
