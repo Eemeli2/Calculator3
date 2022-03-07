@@ -12,10 +12,8 @@
 }
     else
 {
-    <div>
-         
-          <label style="float:left;" type="text"> Diameter: </label>
-      
+    <div style="float:right;">
+         <label> Diameter: </label>
 
         <input type="text" @bind="@diameterValue" @oninput="@((e) => { diameterValue=(string)e.Value;})"/>
          <button type="submit" @onclick="AddNewDiameter">Submit</button>
@@ -43,7 +41,6 @@
 
     public Diameter? SelectedDiameter { get; set; }
     private string diameterValue { get; set; }
-
     private string diameterUnit { get; set; } = Diameter.Unit.Inch.ToString();
 
     protected override async Task OnInitializedAsync()

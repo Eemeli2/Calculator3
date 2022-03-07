@@ -13,8 +13,8 @@
 }
     else
 {
-    <div>
-           <label style="text-align:left;">Mass: </label>
+    <div style="float:right;">
+         <label> Mass: </label>
 
         <input type="text" @bind="@massValue" @oninput="@((e) => { massValue=(string)e.Value;})"/>
           <button type="submit" @onclick="AddNewMass">Submit</button>
@@ -32,7 +32,6 @@
                 <option value="@mass.ToString()">@mass.ToString()</option>
             }
         </select>
-
     </div>
 
 }
@@ -43,7 +42,6 @@
 
     public Mass? SelectedMass { get; set; }
     private string massValue { get; set; }
-
     private string massUnit { get; set; } = Mass.Unit.Grain.ToString();
 
     protected override async Task OnInitializedAsync()

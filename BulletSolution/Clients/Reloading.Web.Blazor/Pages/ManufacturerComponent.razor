@@ -1,0 +1,61 @@
+﻿@using BulletLibrary
+@using BulletLibrary.Interfaces
+@using Reloading.Services.EF
+@using Reloading.Web.Blazor.Data
+@using System.Linq;
+
+@inject IManufacturerService ManufacturerService
+
+
+@if (manufacturers == Enumerable.Empty<Manufacturer>())
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    <div style="float:right;">
+        <label> Manufacturer: </label>
+
+        
+        <input type="text" @bind="@NewManufacturerName" @oninput="@((e) => { NewManufacturerName=(string)e.Value;})"/>
+        <button type="submit" @onclick="AddNewManufacturer">Submit</button>
+
+        <select class="form-control" @onchange="@((args) => OnChange(args))">
+            <option selected disabled value="null">Choose manufacturer</option>
+            @foreach (var manufacturer in manufacturers)
+            {
+                <option value="@manufacturer.Name">@manufacturer.Name</option>
+            }
+        </select>
+
+    </div>
+
+    @code {
+
+    private IEnumerable<Manufacturer> manufacturers = Enumerable.Empty<Manufacturer>();
+
+    public Manufacturer? SelectedManufacturer { get; set; }
+    private string NewManufacturerName {get;set;} = string.Empty;
+    private string manufacturerName { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        manufacturers = await ManufacturerService.GetAll();
+    }
+    private void OnChange(ChangeEventArgs args)
+    {
+        SelectedManufacturer = manufacturers.FirstOrDefault(d => d.ToString().Equals(args.Value));
+    }
+
+    private async Task AddNewManufacturer()
+    {
+        await ManufacturerService.Insert(new Manufacturer
+            {
+                Name = NewManufacturerName
+            });
+
+        manufacturers = await ManufacturerService.GetAll();
+    }
+   }
+}
