@@ -12,7 +12,7 @@
 }
     else
 {
-    <div style="float:right;">
+    <div >
          <label> Diameter: </label>
 
         <input type="text" @bind="@diameterValue" @oninput="@((e) => { diameterValue=(string)e.Value;})"/>
@@ -32,6 +32,7 @@
             }
         </select>
     </div>
+    
 }
 
 @code {
@@ -39,7 +40,9 @@
 
     private IEnumerable<Diameter> diameters = Enumerable.Empty<Diameter>();
 
+    [Parameter]
     public Diameter? SelectedDiameter { get; set; }
+
     private string diameterValue { get; set; }
     private string diameterUnit { get; set; } = Diameter.Unit.Inch.ToString();
 

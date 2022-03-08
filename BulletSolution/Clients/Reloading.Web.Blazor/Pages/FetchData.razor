@@ -15,7 +15,7 @@
 @inject IMeasurementService MeasurementService
 
 <h1 style="text-align:center">
-    Add Bullet
+    Title placeholder
 </h1>
 
 @if (bullets == Enumerable.Empty<Bullet>())
@@ -24,41 +24,48 @@
 }
     else
 {
+    <h2 style="float:right"> Add bullet </h2>
 
-          <ManufacturerComponent @ref="manufacturerComponent"/>
+    <div style="position:absolute; right:20px; top:200px;">
+     <ManufacturerComponent @ref="manufacturerComponent"/>
+    </div>
 
-         <DiameterComponent @ref="diameterComponent"/>
+    <div style="position:absolute; right:20px; top:310px;"> 
+     <DiameterComponent @ref="diameterComponent"/>'
+    </div>
 
-         <MassComponent @ref="massComponent"/>
+   <div style="position:absolute; right:20px; top:450px;">
+     <MassComponent @ref="massComponent"/>
+    </div>
 
-        
-   
+
+    <h2 style="float:left"> Bullet Details </h2>
+
+    <label style="position:absolute; left:280px; top: 210px;"> Manufacturer: </label>
+    <div style="position:absolute; left:280px; top: 260px;"> Diameter: @diameterComponent?.SelectedDiameter </div>
+    <label style="position:absolute; left:280px; top: 310px;"> Mass:  </label>
+    
 
 
-    <div style="float:left">
-        <p></p>
+    <div style="position:absolute; left:280px; top: 350px;">
         <label> Bullet name:</label>
 
               <input type="text" @bind="@bulletName" @oninput="@((e) => { NewBullet=(string)e.Value;})"/>
               <button type="submit" @onclick="AddNewBullet">Submit</button>
      </div>
 
-      
-       
-      
-
-
 }
-
 @code {
+
+
 
     private DiameterComponent? diameterComponent;
     private MassComponent? massComponent;
     private ManufacturerComponent? manufacturerComponent;
+
     private IEnumerable<Bullet> bullets = Enumerable.Empty<Bullet>();
 
     private string NewBullet { get; set; } = string.Empty;
-
     private string bulletName { get; set; }
 
 
