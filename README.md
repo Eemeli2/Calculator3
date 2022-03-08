@@ -38,7 +38,9 @@ Solution: after adding a new service, migrate them to the database on the packag
 
 2.  Use a Razor component to implement diameter so code is re-usable on other pages. Do this for every component. Start by moving c# and html code from fetchdata.razor to their own respective components like DiameterComponent (already done) to reduce re-use of code.
   
-Code is now re-usable in FetchData, still not usable in CaliberPage. 
+  All components done. Code is now re-usable in FetchData and CaliberPage.
+  
+
 
 
 
