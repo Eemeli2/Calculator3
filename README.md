@@ -40,6 +40,10 @@ Solution: after adding a new service, migrate them to the database on the packag
   
   All components done. Code is now re-usable in FetchData and CaliberPage.
   
+  UI issue, pages not displaying elements correctly.
+  - Fixed UI. Component location now dependant on page itself rather than the component.
+  
+  Make a child component for displaying selected Elements. 
 
 
 
