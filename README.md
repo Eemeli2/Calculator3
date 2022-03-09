@@ -43,7 +43,11 @@ Solution: after adding a new service, migrate them to the database on the packag
   UI issue, pages not displaying elements correctly.
   - Fixed UI. Component location now dependant on page itself rather than the component.
   
-  Make a child component for displaying selected Elements. 
+  ~~Make a child component for displaying selected Elements.~~
+  
+  Fetchdata.razor cleaned up and is now a page with reusable components
+    Next do the same for CaliberPage
+    Change Name of FetchData for something more suitable
 
 
 
