@@ -4,6 +4,7 @@
 @using Reloading.Web.Blazor.Data
 @using System.Linq;
 
+@inject NavigationManager UriHelper
 @inject IMeasurementService MeasurementService
 
 @if (diameters == Enumerable.Empty<Diameter>())
@@ -32,18 +33,15 @@
             }
         </select>
     </div>
-    
 }
 
 @code {
 
-
     private IEnumerable<Diameter> diameters = Enumerable.Empty<Diameter>();
 
-    [Parameter]
     public Diameter? SelectedDiameter { get; set; }
+    public string diameterValue { get; set; }
 
-    private string diameterValue { get; set; }
     private string diameterUnit { get; set; } = Diameter.Unit.Inch.ToString();
 
     protected override async Task OnInitializedAsync()
@@ -54,7 +52,11 @@
     private void OnChange(ChangeEventArgs args)
     {
         SelectedDiameter = diameters.FirstOrDefault(d => d.ToString().Equals(args.Value));
+        DiameterChangedEvent.InvokeAsync(SelectedDiameter);
     }
+
+    [Parameter]
+    public EventCallback<Diameter> DiameterChangedEvent { get; set; }
 
     private async Task AddNewDiameter()
     {

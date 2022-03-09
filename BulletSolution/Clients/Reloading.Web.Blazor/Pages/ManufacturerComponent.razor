@@ -46,8 +46,12 @@ else
     }
     private void OnChange(ChangeEventArgs args)
     {
-        SelectedManufacturer = manufacturers.FirstOrDefault(m => m.ToString().Equals(args.Value));
+        SelectedManufacturer = manufacturers.FirstOrDefault(m => m.Name.Equals(args.Value));
+        ManufacturerChangedEvent.InvokeAsync(SelectedManufacturer);
     }
+
+    [Parameter]
+    public EventCallback<Manufacturer> ManufacturerChangedEvent { get; set; }
 
     private async Task AddNewManufacturer()
     {

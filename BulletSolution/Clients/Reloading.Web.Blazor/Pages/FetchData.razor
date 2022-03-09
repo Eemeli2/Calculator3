@@ -4,15 +4,17 @@
 
 @using BulletLibrary
 @using BulletLibrary.Interfaces
+@using Microsoft.AspNetCore.Http.Extensions
 @using Reloading.Services.EF
 @using Reloading.Web.Blazor.Data
 @using System.Linq;
 
-
+@inject NavigationManager UriHelper
 @inject IJSRuntime JsRuntime
 @inject IManufacturerService ManufacturerService
 @inject IBulletService BulletService
 @inject IMeasurementService MeasurementService
+
 
 <h1 style="text-align:center">
     Title placeholder
@@ -27,24 +29,25 @@
     <h2 style="float:right"> Add bullet </h2>
 
     <div style="position:absolute; right:20px; top:200px;">
-     <ManufacturerComponent @ref="manufacturerComponent"/>
+     <ManufacturerComponent @ref="manufacturerComponent" ManufacturerChangedEvent="ManufacturerUpdated" />
     </div>
 
     <div style="position:absolute; right:20px; top:310px;"> 
-     <DiameterComponent @ref="diameterComponent"/>'
+     <DiameterComponent @ref="diameterComponent" DiameterChangedEvent="DiameterUpdated"/>
     </div>
 
    <div style="position:absolute; right:20px; top:450px;">
-     <MassComponent @ref="massComponent"/>
+     <MassComponent @ref="massComponent" MassChangedEvent="MassUpdated" />
     </div>
 
 
     <h2 style="float:left"> Bullet Details </h2>
 
-    <label style="position:absolute; left:280px; top: 210px;"> Manufacturer: </label>
-    <div style="position:absolute; left:280px; top: 260px;"> Diameter: @diameterComponent?.SelectedDiameter </div>
-    <label style="position:absolute; left:280px; top: 310px;"> Mass:  </label>
+    <div style="position:absolute; left:280px; top: 210px;"> Manufacturer:@manufacturerComponent?.SelectedManufacturer?.ToString() </div>
+    <div  style="position:absolute; left:280px; top: 260px;"> Diameter: @diameterComponent?.SelectedDiameter?.ToString()</div>
+    <div style="position:absolute; left:280px; top: 310px;"> Mass: @massComponent?.SelectedMass?.ToString() </div>
     
+
 
 
     <div style="position:absolute; left:280px; top: 350px;">
@@ -56,8 +59,6 @@
 
 }
 @code {
-
-
 
     private DiameterComponent? diameterComponent;
     private MassComponent? massComponent;
@@ -71,7 +72,22 @@
 
     protected override async Task OnInitializedAsync()
     {
-        bullets = await BulletService.GetAll();
+        bullets = await BulletService.GetAll();  
+    }
+
+    void DiameterUpdated(Diameter args)
+    {
+        StateHasChanged();    
+    }
+
+    void MassUpdated(Mass args)
+    {
+        StateHasChanged();
+    }
+
+    void ManufacturerUpdated (Manufacturer args)
+    {
+        StateHasChanged();
     }
 
     private async Task AddNewBullet()

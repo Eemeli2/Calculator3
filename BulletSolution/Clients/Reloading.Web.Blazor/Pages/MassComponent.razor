@@ -48,10 +48,15 @@
         masses = await MeasurementService.GetAllMasses();
     }
 
-     private void OnChange(ChangeEventArgs args)
+    private void OnChange(ChangeEventArgs args)
     {
         SelectedMass = masses.FirstOrDefault(d => d.ToString().Equals(args.Value));
+        MassChangedEvent.InvokeAsync(SelectedMass);
     }
+
+    [Parameter]
+
+    public EventCallback<Mass> MassChangedEvent { get; set; }
 
     private async Task AddNewMass()
     {
