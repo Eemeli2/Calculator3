@@ -17,7 +17,6 @@ namespace Reloading.Web.Blazor.Data
 
         public Primer.PrimerType SelectedPrimer { get; set; }
 
-
         bool CanSubmit => !string.IsNullOrWhiteSpace(NewCaliberName) && DiameterComponent?.SelectedDiameter is not null;
 
         protected async void Insert()
@@ -38,6 +37,11 @@ namespace Reloading.Web.Blazor.Data
             Calibers = await CaliberService!.GetAll();
             await base.OnInitializedAsync();
         }
+       public void DiameterUpdated(Diameter args)
+        {
+            StateHasChanged();
+        }
+
     }
 }
 

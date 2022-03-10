@@ -27,12 +27,11 @@ else
 	
 		<div style="float:left">
 			<h2 style="text-align:left;">Caliber Details</h2>
-			<p>
-			</p>
-				<DiameterComponent @ref="DiameterComponent"/>
-
-			<p>
-			</p>
+			<p></p>
+				<DiameterComponent @ref="DiameterComponent" DiameterChangedEvent="DiameterUpdated"/>
+			<p></p>
+			<div> Diameter: @DiameterComponent?.SelectedDiameter?.ToString()</div>
+			<p></p>
 		
 
 
@@ -45,18 +44,14 @@ else
             }
 		</select>
 		
-		<p>
-
-		</p>
+		<p></p>
 		<label type="text">
 				Primer Type: @SelectedPrimer
 			</label>
-			<p>
-			</p>
+			<p></p>
 
 			
-			<p>
-			</p>
+			<p></p>
 			<label>
 				Caliber name:
 			</label>
