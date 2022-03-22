@@ -16,7 +16,7 @@ namespace Reloading.Services.EF
         {
             using (var db = new ReloadingContext())
             {
-                return await db.Bullets.ToListAsync();
+                return await db.Bullets.Include(b => b.Manufacturer).Include(d =>d.Diameter).Include(m => m.Mass).ToListAsync();
             }
                 
         }
@@ -41,6 +41,7 @@ namespace Reloading.Services.EF
                 if (bullet.Diameter!.Id.HasValue) db.Diameters.Attach(bullet.Diameter!);
                 if (bullet.Mass!.Id.HasValue) db.Masses.Attach(bullet.Mass!);
                 if (bullet.Manufacturer!.Id.HasValue) db.Manufacturers.Attach(bullet.Manufacturer!);
+              
 
 
                 //db.Manufacturers.Attach(bullet.Manufacturer!);

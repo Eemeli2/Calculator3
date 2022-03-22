@@ -19,9 +19,12 @@ namespace BulletWebApplication.Controllers
 
         [HttpGet]
         [Route("getall")]
-        public Task<IEnumerable<Bullet>> GetAll()
+        public async Task<IEnumerable<Bullet>> GetAll()
         {
-            return _bulletService.GetAll();
+            var bullets = await _bulletService.GetAll();
+            
+
+            return bullets;
         }
 
         [HttpPost]

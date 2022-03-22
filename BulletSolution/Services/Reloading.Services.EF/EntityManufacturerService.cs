@@ -32,6 +32,7 @@ namespace Reloading.Services.EF
         {
             using (var db = new ReloadingContext())
             {
+
                 var m = await db.Manufacturers.AddAsync(manufacturer);
                 await db.SaveChangesAsync();
                 return manufacturer.Id.Value;

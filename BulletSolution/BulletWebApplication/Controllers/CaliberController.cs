@@ -25,14 +25,14 @@ namespace BulletWebApplication.Controllers
            return _caliberService.GetAll();
         }
 
-        [HttpGet]
-        [Route("GetAll")]
+        [HttpPost]
+        [Route("GetAllByDiameter")]
         public Task<IEnumerable<Caliber>> GetAllByDiameter(Diameter diameter)
         {
             return _caliberService.GetAllByDiameter(diameter);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Insert")]
         public Task<Guid> Insert([FromBody]Caliber caliber)
         {

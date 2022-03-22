@@ -1,10 +1,12 @@
 ﻿using BulletLibrary;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Reloading.Services.EF
 {
     internal class ReloadingContext : DbContext
     {
+     
         public DbSet<Manufacturer> Manufacturers { get; set; }
 
         public DbSet<Bullet> Bullets { get; set; }
@@ -14,6 +16,7 @@ namespace Reloading.Services.EF
         public DbSet<Mass> Masses { get; set; }
 
         public DbSet<Caliber> Calibers { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

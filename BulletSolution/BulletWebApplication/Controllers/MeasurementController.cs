@@ -21,9 +21,11 @@ namespace BulletWebApplication.Controllers
 
         [HttpGet]
         [Route("GetAllDiameters")]
-        public Task<IEnumerable<Diameter>> GetAllDiameters()
+        public async Task<IEnumerable<Diameter>> GetAllDiameters()
         {
-            return  _measurementService.GetAllDiameters();
+           var diameters = await _measurementService.GetAllDiameters();
+
+            return diameters;
         }
 
         [HttpGet]
@@ -33,14 +35,14 @@ namespace BulletWebApplication.Controllers
             return _measurementService.GetAllMasses();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("InsertDiameter")]
         public Task<Guid> InsertDiameter([FromBody]Diameter diameter)
         {
             return _measurementService.InsertDiameter(diameter);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("InsertMass")]
         public Task<Guid> InsertMass([FromBody]Mass mass)
         {

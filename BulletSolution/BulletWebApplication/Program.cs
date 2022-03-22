@@ -16,9 +16,16 @@ builder.Services.AddSwaggerGen(options =>
         }
     );
 
+#if MOCKED_DATA
 builder.Services.AddSingleton<IBulletService, MockBulletService>()
     .AddSingleton<IManufacturerService, EntityManufacturerService>();
-    
+#else
+builder.Services.AddSingleton<IBulletService, EntityBulletService>()
+    .AddSingleton<IMeasurementService, EntityMeasurementService>()
+    .AddSingleton<ICaliberService, EntityCaliberService>()
+    .AddSingleton<IManufacturerService, EntityManufacturerService>();
+#endif
+
 
 
 

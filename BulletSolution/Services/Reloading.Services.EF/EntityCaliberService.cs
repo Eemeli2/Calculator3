@@ -35,9 +35,6 @@ namespace Reloading.Services.EF
 
                 if (caliber.Diameter!.Id.HasValue) db.Diameters.Attach(caliber.Diameter!);
                
-
-
-
                 var c = await db.Calibers.AddAsync(caliber);
                await db.SaveChangesAsync();
                return caliber.Id.Value;
