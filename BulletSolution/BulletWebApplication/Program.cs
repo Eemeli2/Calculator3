@@ -20,6 +20,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddSingleton<IBulletService, MockBulletService>()
     .AddSingleton<IManufacturerService, EntityManufacturerService>();
 #else
+
 builder.Services.AddSingleton<IBulletService, EntityBulletService>()
     .AddSingleton<IMeasurementService, EntityMeasurementService>()
     .AddSingleton<ICaliberService, EntityCaliberService>()
@@ -39,7 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

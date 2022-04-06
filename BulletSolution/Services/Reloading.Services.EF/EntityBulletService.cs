@@ -1,12 +1,6 @@
 ﻿using BulletLibrary;
 using BulletLibrary.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace Reloading.Services.EF
 {
@@ -16,18 +10,15 @@ namespace Reloading.Services.EF
         {
             using (var db = new ReloadingContext())
             {
-                return await db.Bullets.Include(b => b.Manufacturer).Include(d =>d.Diameter).Include(m => m.Mass).ToListAsync();
+                return await db.Bullets.IncludeAll();
             }
-                
         }
 
         public async Task<IEnumerable<Bullet>> GetAllByDiameter(Diameter diameter)
         {
-            using (var db = new ReloadingContext())
-            {
-                return db.Bullets.Where(b => diameter.Equals(b.Diameter));
-            }
-
+            using var db = new ReloadingContext();
+            
+            return await db.Bullets.Where(b => diameter.Equals(b.Diameter)).IncludeAll();
         }
 
         public async Task<Guid> Insert(Bullet bullet)
@@ -48,10 +39,18 @@ namespace Reloading.Services.EF
                 //db.Diameters.Attach(bullet.Diameter!);
                 //db.Masses.Attach(bullet.Mass!);
 
-                var b = await db.Bullets.AddAsync(bullet);
+                _ = await db.Bullets.AddAsync(bullet);
                 await db.SaveChangesAsync();
                 return bullet.Id.Value;
             }
+        }
+    }
+
+    public static class EntityBulletServiceExtensions
+    {
+        public static Task<List<Bullet>> IncludeAll(this IQueryable<Bullet> bullets)
+        {
+            return bullets.Include(b => b.Manufacturer).Include(d => d.Diameter).Include(m => m.Mass).ToListAsync();
         }
     }
 }

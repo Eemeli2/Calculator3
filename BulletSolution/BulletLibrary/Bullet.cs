@@ -10,11 +10,17 @@ namespace BulletLibrary
         /// <summary>
         /// Gets or sets mass for <see cref="Bullet"/>.
         /// </summary>
-       public Mass? Mass { get; set; }
+        public Mass? Mass { get; set; }
 
         /// <summary>
         /// Gets or sets Diameter for <see cref="Bullet"/>.
         /// </summary>
-       public Diameter? Diameter { get; set; }
+        public Diameter? Diameter { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{Manufacturer?.Name ?? string.Empty} {Name} {Diameter}";
+        }
     }
 }
