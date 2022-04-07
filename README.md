@@ -4,7 +4,7 @@ Read below for more information about each aspect. The project can be used freel
 
 
 # Wiki pages for Calculator 3 are linked below:
-### 1. Reloading client for mobile https://github.com/Eemeli2/Calculator3.wiki.git
+### 1. Reloading client for mobile https://github.com/Eemeli2/Calculator3/wiki/Reloading-Client-mobile
 
 
 ## 1. Practice1
