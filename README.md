@@ -3,6 +3,9 @@ Calculator3 is a placeholder name for a repository with a plethora of diffrent f
 Read below for more information about each aspect. The project can be used freely as a template for similiar projects.
 
 
+# Wiki pages for Calculator 3 are linked below:
+### 1. Reloading client for mobile https://github.com/Eemeli2/Calculator3.wiki.git
+
 
 ## 1. Practice1
 
