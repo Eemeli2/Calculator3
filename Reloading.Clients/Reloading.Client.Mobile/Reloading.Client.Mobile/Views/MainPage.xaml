@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<FlyoutPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:DataType="Reloading.ViewModels:ViewModels:MainViewModel"
-             x:Class="Reloading.Client.Mobile.Views.MainPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+             x:Class="Reloading.Client.Mobile.Views.MainPage"
+              xmlns:local="clr-namespace:Reloading.Client.Mobile.Views"
+            Title="Menu">
+    <FlyoutPage.Flyout>
+        <local:FlyOutMenuPage x:Name="flyout"/>
+    </FlyoutPage.Flyout>
 
-            <Label Text="{Binding }"> 
-                
-            </Label>
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <local:BulletPage/>
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

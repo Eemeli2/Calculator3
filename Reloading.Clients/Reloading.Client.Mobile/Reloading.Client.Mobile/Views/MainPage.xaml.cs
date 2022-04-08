@@ -15,13 +15,24 @@ using Xamarin.Forms.Xaml;
 namespace Reloading.Client.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPage : ContentPage
+    public partial class MainPage : FlyoutPage
     {
         public MainPage()
         {
             InitializeComponent();
 
-            //BindingContext = new MainViewModel();
+            flyout.listview.ItemSelected += OnSelectedItem;
+        }
+
+        private void OnSelectedItem(object sender, SelectedItemChangedEventArgs e)
+        {
+            var item = e.SelectedItem as FlyOutItemPage;
+            if(item != null)
+            {
+                Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetPage));
+                flyout.listview.SelectedItem = null;
+                IsPresented = false;
+            }
         }
     }
 }
